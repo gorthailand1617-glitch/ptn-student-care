@@ -31,3 +31,5 @@ firestore-debug.log
 *.xlsx
 *.jpg
 graduation-support-v3.html
+
+.vercel

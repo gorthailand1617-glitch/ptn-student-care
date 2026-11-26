@@ -42,6 +42,7 @@ import {
   saveLocalStudents,
 } from './services/dataService';
 import { createSupportPlan, getEffectiveRisk, getGraduationCriteria, PATHWAYS_SHORT } from './utils/riskEngine';
+import { seedAllDataToFirestore } from './lib/firebase';
 import { TeacherView, StudentSheetTab } from './components/TeacherView';
 import { AdminView } from './components/AdminView';
 import { StudentView } from './components/StudentView';
@@ -526,6 +527,21 @@ export function App() {
               onExportBackup={handleExportBackup}
               onImportBackup={handleImportBackup}
               onCreateTermSnapshot={handleCreateTermSnapshot}
+              onSeedToFirestore={async () => {
+                try {
+                  const res = await seedAllDataToFirestore(students, staff, school, config);
+                  appendAudit(
+                    `Seed ข้อมูลขึ้น Cloud Firestore สำเร็จ (นร. ${res.studentsCount} คน, ครู ${res.staffCount} ท่าน)`,
+                    'sysadmin'
+                  );
+                  showToast(`อัปโหลดขึ้น Firestore สำเร็จ! นร. ${res.studentsCount} คน · ครู ${res.staffCount} ท่าน`);
+                } catch (err) {
+                  showToast(
+                    err instanceof Error ? err.message : 'อัปโหลดขึ้น Firestore ไม่สำเร็จ (กรุณาตรวจสอบสิทธิ์/การล็อกอิน)',
+                    'warning'
+                  );
+                }
+              }}
             />
           )}
 

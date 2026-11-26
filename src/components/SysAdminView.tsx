@@ -22,6 +22,7 @@ interface Props {
   onExportBackup: () => void;
   onImportBackup: (jsonText: string) => void;
   onCreateTermSnapshot: (termLabel: string) => void;
+  onSeedToFirestore: () => Promise<void>;
 }
 
 const STAFF_ROLE_LABELS: Record<TeacherStaff['staffRole'], string> = {
@@ -40,7 +41,9 @@ export const SysAdminView: React.FC<Props> = ({
   onExportBackup,
   onImportBackup,
   onCreateTermSnapshot,
+  onSeedToFirestore,
 }) => {
+  const [seedingCloud, setSeedingCloud] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -230,8 +233,25 @@ export const SysAdminView: React.FC<Props> = ({
           </h2>
           <div className="flex flex-wrap gap-3">
             <button
+              disabled={seedingCloud}
+              onClick={async () => {
+                setSeedingCloud(true);
+                try {
+                  await onSeedToFirestore();
+                } finally {
+                  setSeedingCloud(false);
+                }
+              }}
+              className="clay-btn-primary px-5 py-2.5 text-xs font-bold inline-flex items-center gap-1.5 disabled:opacity-50"
+            >
+              <Upload className="w-4 h-4" />
+              {seedingCloud
+                ? 'กำลังอัปโหลดขึ้น Cloud Firestore...'
+                : `Seed ข้อมูลนักเรียน (${students.length}) และครู (${staff.length}) ขึ้น Firestore`}
+            </button>
+            <button
               onClick={onExportBackup}
-              className="clay-btn-primary px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-1.5"
+              className="clay-btn-soft px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-1.5"
             >
               <Download className="w-4 h-4" /> ดาวน์โหลดไฟล์สำรองข้อมูล (.json)
             </button>
