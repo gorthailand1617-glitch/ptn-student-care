@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34495E"/>
+      <stop offset="100%" stop-color="#2B3E50"/>
+    </linearGradient>
+    <linearGradient id="t" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#92C2C2"/>
+      <stop offset="100%" stop-color="#4A7C82"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="url(#g)"/>
+  <circle cx="64" cy="56" r="30" fill="url(#t)" opacity="0.95"/>
+  <path d="M50 56l10 10 20-20" fill="none" stroke="#E6EEF2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="64" y="108" text-anchor="middle" fill="#E6EEF2" font-family="sans-serif" font-weight="700" font-size="18">PTN</text>
+</svg>

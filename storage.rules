@@ -1,0 +1,31 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Student & Guardian profile photos (400x400 WebP/JPEG, max 200KB)
+    match /students/{studentCode}/{fileName} {
+      allow read: if request.auth != null && (
+        request.auth.token.role in ['sysadmin', 'admin', 'teacher', 'counselor', 'case_manager']
+        || request.auth.token.studentCode == studentCode
+      );
+      allow write: if request.auth != null
+        && (
+          request.auth.token.role in ['sysadmin', 'teacher', 'counselor', 'case_manager']
+          || request.auth.token.studentCode == studentCode
+        )
+        && request.resource.size < 200 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if false;
+    }
+
+    // Home visit compressed photos (max 2MB, image only)
+    match /home-visits/{studentCode}/{fileName} {
+      allow read: if request.auth != null
+        && (request.auth.token.role in ['teacher', 'counselor', 'case_manager', 'admin']);
+      allow write: if request.auth != null
+        && (request.auth.token.role in ['teacher', 'counselor', 'case_manager'])
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if false;
+    }
+  }
+}

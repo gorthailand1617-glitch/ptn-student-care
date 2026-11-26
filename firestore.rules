@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userRole() {
+      return request.auth.token.role;
+    }
+
+    function isSysAdmin() {
+      return isSignedIn() && userRole() == 'sysadmin';
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (userRole() == 'admin' || userRole() == 'sysadmin');
+    }
+
+    function isTeacher() {
+      return isSignedIn() && (userRole() in ['teacher', 'counselor', 'case_manager']);
+    }
+
+    function isAdvisorOrCaseManager(studentId) {
+      let stu = get(/databases/$(database)/documents/students/$(studentId)).data;
+      return isTeacher() &&
+        (request.auth.token.room == stu.room
+         || request.auth.uid == stu.assignedCaseManagerId
+         || userRole() == 'counselor');
+    }
+
+    // Staff & School Configuration (System Admin only for writes)
+    match /staff/{staffId} {
+      allow read: if isSignedIn();
+      allow write: if isSysAdmin();
+    }
+
+    match /schoolProfile/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSysAdmin();
+    }
+
+    // Core student academic & graduation readiness records
+    match /students/{studentId} {
+      allow read: if isAdmin() || isTeacher()
+        || (isSignedIn() && request.auth.token.studentCode == studentId);
+      allow create, update: if isAdmin() || isTeacher();
+      allow delete: if false;
+
+      // Sensitive PDPA subcollection: 7-domain screening, 9S, private student help requests
+      // Strictly locked to homeroom advisor, assigned case manager, and counselor (even sysadmin/admin cannot read raw text)
+      match /sensitive/{docId} {
+        allow read, write: if isAdvisorOrCaseManager(studentId);
+      }
+
+      match /visits/{visitId} {
+        allow read, write: if isAdvisorOrCaseManager(studentId) || isAdmin();
+      }
+
+      match /plans/{planId} {
+        allow read: if isAdmin() || isTeacher()
+          || (isSignedIn() && request.auth.token.studentCode == studentId);
+        allow create, update: if isAdmin() || isTeacher();
+        allow delete: if isTeacher();
+      }
+    }
+
+    match /settings/{settingId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Immutable PDPA Audit Logs (append-only)
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+  }
+}

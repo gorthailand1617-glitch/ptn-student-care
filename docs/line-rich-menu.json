@@ -1,0 +1,35 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 843
+  },
+  "selected": true,
+  "name": "PTN-Student-Care Rich Menu",
+  "chatBarText": "เมนู PTN-Student-Care",
+  "areas": [
+    {
+      "bounds": { "x": 0, "y": 0, "width": 833, "height": 843 },
+      "action": {
+        "type": "uri",
+        "label": "ดูความก้าวหน้าบุตรหลาน",
+        "uri": "https://liff.line.me/YOUR_LIFF_ID/?role=parent"
+      }
+    },
+    {
+      "bounds": { "x": 834, "y": 0, "width": 833, "height": 843 },
+      "action": {
+        "type": "uri",
+        "label": "ก้าวต่อไปของนักเรียน",
+        "uri": "https://liff.line.me/YOUR_LIFF_ID/?role=student"
+      }
+    },
+    {
+      "bounds": { "x": 1667, "y": 0, "width": 833, "height": 843 },
+      "action": {
+        "type": "uri",
+        "label": "สำหรับครูที่ปรึกษา",
+        "uri": "https://liff.line.me/YOUR_LIFF_ID/?role=teacher"
+      }
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --navy-deep: #2B3E50;
+    --navy-mid: #34495E;
+    --mist-bg: #BDCCD6;
+    --mist-light: #CFDCE4;
+    --pill-light: #E6EEF2;
+    --teal-btn: #4A7C82;
+    --kpi-teal: #92C2C2;
+    --kpi-steel: #A6BCCC;
+    --kpi-ice: #CBE0EC;
+    --kpi-lavender: #9694B8;
+  }
+
+  html, body {
+    font-family: 'IBM Plex Sans Thai', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #CFDCE4 0%, #BDCCD6 55%, #B4C5D1 100%);
+    color: #1E2E3E;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body.big-text {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+}
+
+/* Soft 3D Claymorphism / Tactile Neumorphism Utilities */
+.clay-sidebar {
+  background: linear-gradient(165deg, #34495E 0%, #2B3E50 65%, #233342 100%);
+  box-shadow:
+    8px 12px 28px rgba(24, 38, 52, 0.32),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.14),
+    inset -3px -4px 8px rgba(15, 25, 35, 0.35);
+}
+
+.clay-sidebar-pill-active {
+  background: linear-gradient(145deg, #F0F6F9 0%, #DCE7EE 100%);
+  color: #2B3E50;
+  box-shadow:
+    4px 6px 14px rgba(16, 28, 40, 0.35),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 5px rgba(166, 188, 204, 0.45);
+}
+
+.clay-card {
+  background: linear-gradient(145deg, #D9E5EC 0%, #C8D7E1 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    8px 10px 22px rgba(43, 62, 80, 0.16),
+    -4px -4px 12px rgba(255, 255, 255, 0.55),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 6px rgba(145, 168, 184, 0.28);
+}
+
+.clay-card-light {
+  background: linear-gradient(145deg, #ECF3F7 0%, #DCE7EE 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    6px 8px 18px rgba(43, 62, 80, 0.13),
+    -3px -3px 10px rgba(255, 255, 255, 0.65),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 5px rgba(160, 182, 198, 0.25);
+}
+
+.clay-hero {
+  background: linear-gradient(135deg, #3A5166 0%, #2B3E50 55%, #243546 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    10px 14px 28px rgba(32, 48, 64, 0.28),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.18),
+    inset -3px -3px 10px rgba(16, 26, 36, 0.45);
+}
+
+/* 4 Pastel 3D KPI Stat Cards */
+.clay-kpi-teal {
+  background: linear-gradient(145deg, #A3D0D0 0%, #86B8B8 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    7px 10px 20px rgba(43, 62, 80, 0.16),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.6),
+    inset -3px -3px 7px rgba(74, 124, 130, 0.35);
+}
+
+.clay-kpi-steel {
+  background: linear-gradient(145deg, #B8CCDA 0%, #98B0C2 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    7px 10px 20px rgba(43, 62, 80, 0.16),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.6),
+    inset -3px -3px 7px rgba(84, 108, 128, 0.3);
+}
+
+.clay-kpi-ice {
+  background: linear-gradient(145deg, #DCECF5 0%, #BDD6E5 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    7px 10px 20px rgba(43, 62, 80, 0.15),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.75),
+    inset -3px -3px 7px rgba(130, 160, 180, 0.3);
+}
+
+.clay-kpi-lavender {
+  background: linear-gradient(145deg, #A9A7C9 0%, #8987AD 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    7px 10px 20px rgba(43, 62, 80, 0.18),
+    inset 2px 2px 6px rgba(255, 255, 255, 0.5),
+    inset -3px -3px 7px rgba(78, 76, 114, 0.35);
+}
+
+.clay-icon-tile {
+  background: linear-gradient(145deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.22) 100%);
+  border-radius: 14px;
+  box-shadow:
+    3px 4px 10px rgba(43, 62, 80, 0.16),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.85),
+    inset -1.5px -1.5px 3px rgba(43, 62, 80, 0.12);
+}
+
+/* Tactile Pill Buttons */
+.clay-btn-primary {
+  background: linear-gradient(145deg, #568E95 0%, #427076 100%);
+  color: #F4F9FB;
+  border-radius: 9999px;
+  box-shadow:
+    4px 6px 14px rgba(34, 62, 68, 0.32),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.35),
+    inset -2px -2px 4px rgba(24, 48, 52, 0.4);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.clay-btn-primary:hover {
+  filter: brightness(1.05);
+}
+.clay-btn-primary:active {
+  transform: translateY(1.5px);
+  box-shadow:
+    2px 3px 6px rgba(34, 62, 68, 0.28),
+    inset 2px 2px 6px rgba(24, 48, 52, 0.45);
+}
+
+.clay-btn-soft {
+  background: linear-gradient(145deg, #EAF2F6 0%, #D4E1E9 100%);
+  color: #2B3E50;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    4px 5px 12px rgba(43, 62, 80, 0.14),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.85);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.clay-btn-soft:active {
+  transform: translateY(1px);
+}
+
+.clay-btn-line {
+  background: linear-gradient(145deg, #0AD65E 0%, #05B14B 100%);
+  color: #FFFFFF;
+  border-radius: 9999px;
+  box-shadow:
+    4px 6px 14px rgba(5, 130, 56, 0.32),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.4);
+  transition: transform 0.14s ease;
+}
+.clay-btn-line:active {
+  transform: translateY(1.5px);
+}
+
+.clay-input {
+  background: linear-gradient(145deg, #E3ECF1 0%, #EDF4F8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  box-shadow:
+    inset 3px 3px 7px rgba(43, 62, 80, 0.13),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+  color: #1E2E3E;
+}
+.clay-input:focus {
+  outline: none;
+  border-color: #4A7C82;
+  box-shadow:
+    inset 2px 2px 5px rgba(43, 62, 80, 0.12),
+    0 0 0 3px rgba(74, 124, 130, 0.22);
+}
+
+/* Mobile Floating Pill Bottom Nav */
+.clay-bottom-nav {
+  background: linear-gradient(145deg, rgba(43, 62, 80, 0.96) 0%, rgba(35, 51, 66, 0.98) 100%);
+  backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 10px 28px rgba(20, 32, 44, 0.38),
+    inset 1.5px 1.5px 4px rgba(255, 255, 255, 0.18);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(43, 62, 80, 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(43, 62, 80, 0.42);
+}
