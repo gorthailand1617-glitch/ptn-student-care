@@ -435,7 +435,7 @@ export function App() {
               ระบบดูแลช่วยเหลือและติดตามความพร้อมจบการศึกษา
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 mt-1">
-              ปีการศึกษา {school.academicYear} ภาคเรียนที่ {school.term} · OBEC CARE · 1 โรงเรียน 3 รูปแบบ
+              ปีการศึกษา {school.academicYear} ภาคเรียนที่ {school.term} · PTN CARE · 1 โรงเรียน 3 รูปแบบ
             </p>
           </div>
 

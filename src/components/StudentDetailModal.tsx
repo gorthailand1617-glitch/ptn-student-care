@@ -559,7 +559,7 @@ export const StudentDetailModal: React.FC<Props> = ({
           {activeTab === 'screening' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-[#2B3E50]">แบบคัดกรอง 7 ด้าน (OBEC CARE) & 9S</h3>
+                <h3 className="font-bold text-[#2B3E50]">แบบคัดกรอง 7 ด้าน (PTN CARE) & 9S</h3>
                 <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700">
                   ข้อมูลอ่อนไหว (PDPA)
                 </span>

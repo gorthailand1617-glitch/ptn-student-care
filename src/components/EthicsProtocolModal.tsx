@@ -15,7 +15,7 @@ export const EthicsProtocolModal: React.FC<Props> = ({ onAccept }) => {
           </div>
           <div>
             <h2 className="text-lg font-bold">ข้อตกลงจริยธรรมการใช้ข้อมูล (Teacher Ethics Protocol)</h2>
-            <p className="text-xs text-slate-600">มาตรฐาน OBEC CARE & PDPA โรงเรียนเปรมติณสูลานนท์</p>
+            <p className="text-xs text-slate-600">มาตรฐาน PTN CARE & PDPA โรงเรียนเปรมติณสูลานนท์</p>
           </div>
         </div>
 
