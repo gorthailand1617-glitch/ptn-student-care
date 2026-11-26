@@ -1,5 +1,5 @@
 # คู่มือการ Deploy PTN-Student-Care ขึ้น Production (Firebase + LINE LIFF)
-โรงเรียนเปรมติณสูลานนท์ องค์การบริหารงานส่วนจังหวัดขอนแก่น · **Dev By Kru.gorthailand**
+โรงเรียนเปรมติณสูลานนท์ องค์การบริหารส่วนจังหวัดขอนแก่น · **Dev By Kru.gorthailand**
 
 ## 1. ตั้งค่า Firebase Project
 1. สร้างโปรเจกต์ที่ [Firebase Console](https://console.firebase.google.com/) และเปิดใช้งาน:

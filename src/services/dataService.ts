@@ -38,7 +38,7 @@ const STORAGE_KEYS = {
 
 export const DEFAULT_SCHOOL_PROFILE: SchoolProfile = {
   schoolName: 'โรงเรียนเปรมติณสูลานนท์',
-  affiliation: 'องค์การบริหารงานส่วนจังหวัดขอนแก่น',
+  affiliation: 'องค์การบริหารส่วนจังหวัดขอนแก่น',
   academicYear: '2569',
   term: '1',
   directorName: ADVISOR_ORDER_DATA.principal.name,
@@ -143,7 +143,11 @@ export function loadLocalSchoolProfile(): SchoolProfile {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.SCHOOL);
     if (!raw) return DEFAULT_SCHOOL_PROFILE;
-    return { ...DEFAULT_SCHOOL_PROFILE, ...JSON.parse(raw) };
+    const merged = { ...DEFAULT_SCHOOL_PROFILE, ...JSON.parse(raw) };
+    if (merged.affiliation === 'องค์การบริหารงานส่วนจังหวัดขอนแก่น') {
+      merged.affiliation = 'องค์การบริหารส่วนจังหวัดขอนแก่น';
+    }
+    return merged;
   } catch {
     return DEFAULT_SCHOOL_PROFILE;
   }

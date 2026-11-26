@@ -1,6 +1,6 @@
 /**
  * Firebase Cloud Functions (v2) — LINE Messaging API Integration for PTN-Student-Care
- * โรงเรียนเปรมติณสูลานนท์ องค์การบริหารงานส่วนจังหวัดขอนแก่น
+ * โรงเรียนเปรมติณสูลานนท์ องค์การบริหารส่วนจังหวัดขอนแก่น
  * Dev By Kru.gorthailand
  *
  * PDPA Privacy Design:
