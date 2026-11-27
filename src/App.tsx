@@ -22,6 +22,7 @@ import {
   LogIn,
   Sun,
   Moon,
+  BookOpen,
 } from 'lucide-react';
 import { AuditLog, ImportSummary, RiskConfig, Role, SchoolProfile, Student, TeacherStaff } from './types';
 import { buildInitialRoomUpdates, buildRealSeedStudents } from './data/seedLoader';
@@ -55,6 +56,7 @@ import { AdminStudentTimelineSheet } from './components/AdminStudentTimelineShee
 import { EthicsProtocolModal } from './components/EthicsProtocolModal';
 import { FaceCaptureModal } from './components/FaceCaptureModal';
 import { LoginModal } from './components/LoginModal';
+import { UserGuideModal } from './components/UserGuideModal';
 import {
   ClaySwitch,
   ClayToastContainer,
@@ -148,6 +150,7 @@ export function App() {
   const [adminTimelineStudentId, setAdminTimelineStudentId] = useState<string | null>(null);
   const [skippedOnboardingKeys, setSkippedOnboardingKeys] = useState<Record<string, boolean>>({});
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [guideModalOpen, setGuideModalOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState<{ id: number; text: string; time: string; read: boolean }[]>([
     { id: 1, text: 'ยินดีต้อนรับสู่ PTN-Student-Care v3.0 (คำสั่ง รร. ที่ 56/2569)', time: 'เมื่อสักครู่', read: false },
@@ -529,6 +532,16 @@ export function App() {
               )}
             </div>
 
+            {/* User Guide Button */}
+            <button
+              type="button"
+              onClick={() => setGuideModalOpen(true)}
+              className="clay-btn-soft px-3.5 py-2 text-xs font-semibold inline-flex items-center gap-1.5"
+              title="เปิดคู่มือการใช้งานตามบทบาท"
+            >
+              <BookOpen className="w-3.5 h-3.5" /> คู่มือใช้งาน
+            </button>
+
             {/* School SSO / Firebase Login Button */}
             <button
               type="button"
@@ -871,6 +884,13 @@ export function App() {
             }}
           />
         )}
+
+      {/* Role-Based User Guide Modal */}
+      <UserGuideModal
+        open={guideModalOpen}
+        currentRole={role}
+        onClose={() => setGuideModalOpen(false)}
+      />
 
       {/* School SSO / Firebase Auth Login Modal */}
       <LoginModal
