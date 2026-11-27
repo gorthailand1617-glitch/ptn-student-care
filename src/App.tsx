@@ -550,7 +550,64 @@ export function App() {
               onUpdateStaff={(next, action) => {
                 setStaff(next);
                 appendAudit(action, 'sysadmin');
+                showToast(action);
               }}
+              onAddStudent={(code, name, room, parentPhone) => {
+                if (students.some((s) => s.code === code)) {
+                  showToast(`รหัสนักเรียน ${code} มีอยู่ในระบบแล้ว`, 'warning');
+                  return;
+                }
+                const newStudent: Student = {
+                  id: code,
+                  no: 0,
+                  code,
+                  name,
+                  room,
+                  studentPhotoUrl: '',
+                  guardians: [
+                    {
+                      id: `g-${code}-1`,
+                      name: `ผู้ปกครองของ ${name.split(' ')[0]}`,
+                      relation: 'ผู้ปกครองหลัก',
+                      phone: parentPhone,
+                      photoUrl: '',
+                    },
+                  ],
+                  advisor: `ครูที่ปรึกษา ${room}`,
+                  parentPhone,
+                  tel4: (parentPhone.replace(/\D/g, '').slice(-4) || code.slice(-4)).padStart(4, '0'),
+                  creditsEarned: 20,
+                  creditsRequired: room.startsWith('ม.6/') ? 81 : room.startsWith('ม.3/') ? 77 : 41,
+                  attendancePct: 95,
+                  lowAttendanceSubjects: 0,
+                  owedSubjects: 0,
+                  activitiesPassed: 3,
+                  readingWriting: 'ผ่าน',
+                  hasEquitySupport: 0,
+                  isTransitionGrade: room.startsWith('ม.1/') || room.startsWith('ม.4/') ? 1 : 0,
+                  history: ['g', 'g', 'g'],
+                  prevTermOutcome: null,
+                  plans: [],
+                  screening7: [0, 0, 0, 0, 0, 0, 0],
+                  screening9S: '',
+                  visits: [],
+                  asks: [],
+                  goalsDone: {},
+                  parentVerified: false,
+                  parentConsent: false,
+                  lineMessageState: 0,
+                };
+                setStudents((prev) => [newStudent, ...prev]);
+                appendAudit(`แอดมินเพิ่มนักเรียนใหม่: ${name} (รหัส ${code} · ${room})`, 'sysadmin');
+                showToast(`เพิ่มนักเรียน ${name} เรียบร้อยแล้ว`);
+              }}
+              onDeleteStudent={(studentId) => {
+                const target = students.find((s) => s.id === studentId);
+                setStudents((prev) => prev.filter((s) => s.id !== studentId));
+                appendAudit(`แอดมินลบข้อมูลนักเรียน: ${target?.name || studentId} (${target?.code || studentId})`, 'sysadmin');
+                showToast(`ลบข้อมูล ${target?.name || 'นักเรียน'} เรียบร้อยแล้ว`, 'warning');
+              }}
+              onRequestConfirm={requestConfirm}
               onUpdateSchool={(next) => {
                 setSchool(next);
                 appendAudit('อัปเดตข้อมูลโรงเรียนและปีการศึกษา', 'sysadmin');

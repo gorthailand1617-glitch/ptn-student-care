@@ -9,7 +9,7 @@ export interface TeacherStaff {
   name: string;
   email: string;
   phone: string;
-  staffRole: 'homeroom' | 'counselor' | 'case_manager';
+  staffRole: 'sysadmin' | 'admin' | 'homeroom' | 'counselor' | 'case_manager';
   rooms: string[]; // e.g. ['ม.1/1', 'ม.1/2']
   active: boolean;
 }

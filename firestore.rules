@@ -46,7 +46,7 @@ service cloud.firestore {
       allow read: if isAdmin() || isTeacher()
         || (isSignedIn() && request.auth.token.studentCode == studentId);
       allow create, update: if isAdmin() || isTeacher();
-      allow delete: if false;
+      allow delete: if isSysAdmin();
 
       // Sensitive PDPA subcollection: 7-domain screening, 9S, private student help requests
       // Strictly locked to homeroom advisor, assigned case manager, and counselor (even sysadmin/admin cannot read raw text)

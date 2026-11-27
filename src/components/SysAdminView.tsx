@@ -11,13 +11,17 @@ import {
   History,
 } from 'lucide-react';
 import { SchoolProfile, Student, TeacherStaff } from '../types';
+import { ConfirmDialogState } from './ui/ClayPrimitives';
 
 interface Props {
-  tab: number; // 0=จัดการครู/ผู้ดูแลเคส, 1=ตั้งค่าโรงเรียน/ปีการศึกษา, 2=สำรองข้อมูล/Snapshot
+  tab: number; // 0=จัดการผู้ใช้ทุกคน, 1=ตั้งค่าโรงเรียน/ปีการศึกษา, 2=สำรองข้อมูล/Snapshot
   staff: TeacherStaff[];
   school: SchoolProfile;
   students: Student[];
   onUpdateStaff: (next: TeacherStaff[], auditAction: string) => void;
+  onAddStudent: (code: string, name: string, room: string, parentPhone: string) => void;
+  onDeleteStudent: (studentId: string) => void;
+  onRequestConfirm: (dialog: Omit<ConfirmDialogState, 'open'>) => void;
   onUpdateSchool: (next: SchoolProfile) => void;
   onExportBackup: () => void;
   onImportBackup: (jsonText: string) => void;
@@ -26,6 +30,8 @@ interface Props {
 }
 
 const STAFF_ROLE_LABELS: Record<TeacherStaff['staffRole'], string> = {
+  sysadmin: 'แอดมินระบบ',
+  admin: 'ผู้บริหาร',
   homeroom: 'ครูประจำชั้น',
   counselor: 'ครูแนะแนว',
   case_manager: 'ครูผู้ดูแลเคส',
@@ -37,6 +43,9 @@ export const SysAdminView: React.FC<Props> = ({
   school,
   students,
   onUpdateStaff,
+  onAddStudent,
+  onDeleteStudent,
+  onRequestConfirm,
   onUpdateSchool,
   onExportBackup,
   onImportBackup,
@@ -49,6 +58,11 @@ export const SysAdminView: React.FC<Props> = ({
   const [phone, setPhone] = useState('');
   const [staffRole, setStaffRole] = useState<TeacherStaff['staffRole']>('homeroom');
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
+  const [stuCode, setStuCode] = useState('');
+  const [stuName, setStuName] = useState('');
+  const [stuRoom, setStuRoom] = useState('ม.1/1');
+  const [stuPhone, setStuPhone] = useState('');
+  const [stuSearch, setStuSearch] = useState('');
   const [schoolForm, setSchoolForm] = useState<SchoolProfile>(school);
   const [savedNotice, setSavedNotice] = useState('');
   const [snapshotTerm, setSnapshotTerm] = useState(`${school.academicYear}/${school.term}`);
@@ -91,10 +105,18 @@ export const SysAdminView: React.FC<Props> = ({
   const handleDeleteStaff = (id: string) => {
     const target = staff.find((s) => s.id === id);
     if (!target) return;
-    onUpdateStaff(
-      staff.filter((s) => s.id !== id),
-      `ลบรายชื่อบุคลากร ${target.name}`
-    );
+    onRequestConfirm({
+      title: 'ยืนยันการลบผู้ใช้งาน',
+      description: `ต้องการลบ "${target.name}" (${STAFF_ROLE_LABELS[target.staffRole]}) ออกจากระบบใช่หรือไม่?`,
+      confirmLabel: 'ลบผู้ใช้นี้',
+      danger: true,
+      onConfirm: () => {
+        onUpdateStaff(
+          staff.filter((s) => s.id !== id),
+          `ลบผู้ใช้งาน ${target.name} (${STAFF_ROLE_LABELS[target.staffRole]})`
+        );
+      },
+    });
   };
 
   // Tab 1: School Profile & Academic Year
@@ -312,6 +334,8 @@ export const SysAdminView: React.FC<Props> = ({
             onChange={(e) => setStaffRole(e.target.value as TeacherStaff['staffRole'])}
             className="clay-input px-3 py-2 text-sm"
           >
+            <option value="sysadmin">แอดมินระบบ (SysAdmin)</option>
+            <option value="admin">ผู้บริหาร (Admin)</option>
             <option value="homeroom">ครูประจำชั้น (Homeroom)</option>
             <option value="case_manager">ครูผู้ดูแลเคส (Case Manager)</option>
             <option value="counselor">ครูแนะแนว (Counselor)</option>
@@ -390,6 +414,100 @@ export const SysAdminView: React.FC<Props> = ({
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Add & Delete Students / Parents */}
+      <div className="clay-card p-5 space-y-4">
+        <h3 className="font-bold text-[#2B3E50] flex items-center gap-2">
+          <UserPlus className="w-4 h-4 text-[#4A7C82]" /> เพิ่ม / ลบ บัญชีนักเรียนและผู้ปกครอง ({students.length} คน)
+        </h3>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!stuCode.trim() || !stuName.trim()) return;
+            onAddStudent(stuCode.trim(), stuName.trim(), stuRoom, stuPhone.trim());
+            setStuCode('');
+            setStuName('');
+            setStuPhone('');
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5"
+        >
+          <input
+            type="text"
+            required
+            value={stuCode}
+            onChange={(e) => setStuCode(e.target.value)}
+            placeholder="เลขประจำตัว นร."
+            className="clay-input px-3 py-2 text-xs"
+          />
+          <input
+            type="text"
+            required
+            value={stuName}
+            onChange={(e) => setStuName(e.target.value)}
+            placeholder="ชื่อ - สกุลนักเรียน"
+            className="clay-input px-3 py-2 text-xs"
+          />
+          <select
+            value={stuRoom}
+            onChange={(e) => setStuRoom(e.target.value)}
+            className="clay-input px-3 py-2 text-xs"
+          >
+            {allRooms.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+          <input
+            type="text"
+            value={stuPhone}
+            onChange={(e) => setStuPhone(e.target.value)}
+            placeholder="เบอร์ผู้ปกครอง (ไม่บังคับ)"
+            className="clay-input px-3 py-2 text-xs"
+          />
+          <button type="submit" className="clay-btn-primary px-4 py-2 text-xs font-bold">
+            + เพิ่มนักเรียน
+          </button>
+        </form>
+
+        <input
+          type="search"
+          value={stuSearch}
+          onChange={(e) => setStuSearch(e.target.value)}
+          placeholder="ค้นหาชื่อหรือรหัสนักเรียนเพื่อลบ..."
+          className="clay-input w-full px-3 py-2 text-xs"
+        />
+
+        <div className="max-h-60 overflow-y-auto space-y-1.5">
+          {students
+            .filter((s) => {
+              const q = stuSearch.trim().toLowerCase();
+              return !q || s.name.toLowerCase().includes(q) || s.code.includes(q) || s.room.includes(q);
+            })
+            .slice(0, 30)
+            .map((s) => (
+              <div key={s.id} className="clay-card-light px-3.5 py-2 flex items-center justify-between gap-2 text-xs">
+                <div>
+                  <span className="font-bold text-[#2B3E50]">{s.name}</span>{' '}
+                  <span className="text-slate-500">· รหัส {s.code} · {s.room}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onRequestConfirm({
+                      title: 'ยืนยันการลบนักเรียน',
+                      description: `ต้องการลบข้อมูลของ ${s.name} (รหัส ${s.code} · ${s.room}) ออกจากระบบใช่หรือไม่?`,
+                      confirmLabel: 'ลบนักเรียนคนนี้',
+                      danger: true,
+                      onConfirm: () => onDeleteStudent(s.id),
+                    })
+                  }
+                  className="text-rose-400 hover:text-rose-300 p-1 inline-flex items-center gap-1 font-semibold"
+                >
+                  <Trash2 className="w-3.5 h-3.5" /> ลบ
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     </div>
