@@ -56,7 +56,7 @@ interface Props {
   onReassignStudentAdvisor: (studentId: string, newAdvisorName: string) => void;
 }
 
-const PIE_COLORS = ['#4A7C82', '#92C2C2', '#6488A2', '#9694B8', '#5F9EA0', '#779ECB', '#8FA8B8', '#34495E'];
+const PIE_COLORS = ['#22D3EE', '#EC4899', '#8B5CF6', '#F59E0B', '#34D399', '#3B82F6', '#F43F5E', '#A78BFA'];
 
 export const AdminView: React.FC<Props> = ({
   tab,
@@ -762,19 +762,20 @@ export const AdminView: React.FC<Props> = ({
           <div className="h-60">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.gradeData} barGap={4}>
-                <XAxis dataKey="grade" stroke="#34495E" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#34495E" fontSize={12} tickLine={false} axisLine={false} />
+                <XAxis dataKey="grade" stroke="#CBD5E1" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#CBD5E1" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip
                   contentStyle={{
                     borderRadius: '14px',
-                    border: 'none',
-                    background: '#ECF3F7',
-                    boxShadow: '0 8px 20px rgba(43,62,80,0.18)',
+                    border: '1px solid rgba(255,255,255,0.18)',
+                    background: '#1E1745',
+                    color: '#F8FAFC',
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.45)',
                   }}
                 />
-                <Bar dataKey="g" name="ปกติ" fill="#4A7C82" radius={[8, 8, 8, 8]} />
-                <Bar dataKey="y" name="เฝ้าระวัง" fill="#92C2C2" radius={[8, 8, 8, 8]} />
-                <Bar dataKey="r" name="เสี่ยงสูง" fill="#9694B8" radius={[8, 8, 8, 8]} />
+                <Bar dataKey="g" name="ปกติ" fill="#22D3EE" radius={[8, 8, 8, 8]} />
+                <Bar dataKey="y" name="เฝ้าระวัง" fill="#F59E0B" radius={[8, 8, 8, 8]} />
+                <Bar dataKey="r" name="เสี่ยงสูง" fill="#EC4899" radius={[8, 8, 8, 8]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
