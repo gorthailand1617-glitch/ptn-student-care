@@ -20,6 +20,8 @@ import {
   ArrowRightLeft,
   Bell,
   LogIn,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { AuditLog, ImportSummary, RiskConfig, Role, SchoolProfile, Student, TeacherStaff } from './types';
 import { buildInitialRoomUpdates, buildRealSeedStudents } from './data/seedLoader';
@@ -97,6 +99,13 @@ export function App() {
   const [role, setRole] = useState<Role>('admin');
   const [tab, setTab] = useState(0);
   const [bigText, setBigText] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      return localStorage.getItem('ptn_care_theme') === 'light' ? 'light' : 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [demoMode, setDemoMode] = useState(!isFirebaseConfigured);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -191,6 +200,15 @@ export function App() {
   useEffect(() => {
     document.body.classList.toggle('big-text', bigText || role === 'parent');
   }, [bigText, role]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('ptn_care_theme', theme);
+    } catch {
+      // ignore
+    }
+  }, [theme]);
 
   useEffect(() => {
     initLineLiff().then((res) => {
@@ -451,6 +469,19 @@ export function App() {
                 </option>
               ))}
             </select>
+
+            <div className="rounded-full bg-white/12 px-3.5 py-1.5 border border-white/15 flex items-center gap-2">
+              {theme === 'dark' ? <Moon className="w-4 h-4 text-[#F472B6]" /> : <Sun className="w-4 h-4 text-amber-300" />}
+              <ClaySwitch
+                checked={theme === 'light'}
+                onChange={(isLight) => {
+                  const next = isLight ? 'light' : 'dark';
+                  setTheme(next);
+                  showToast(isLight ? 'สลับเป็นธีมสว่าง (Light Mode)' : 'สลับเป็นธีมมืด (Dark Neon Mode)', 'info');
+                }}
+                label={theme === 'light' ? 'โหมดสว่าง' : 'โหมดมืด'}
+              />
+            </div>
 
             <div className="rounded-full bg-white/12 px-3.5 py-1.5 border border-white/15 flex items-center gap-2">
               <Type className="w-4 h-4 text-[#92C2C2]" />

@@ -229,7 +229,14 @@
   color: #94A3B8;
 }
 .clay-card table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(236, 72, 153, 0.14) !important;
+}
+.clay-card .hover\:bg-white\/65:hover,
+.clay-card .hover\:bg-white\/60:hover,
+.clay-card .hover\:bg-white\/40:hover,
+.clay-card .hover\:bg-white:hover {
+  background-color: rgba(236, 72, 153, 0.14) !important;
+  color: #FFFFFF !important;
 }
 .clay-card .bg-white\/45,
 .clay-card .bg-white\/60,
@@ -244,6 +251,101 @@ footer {
 }
 footer span {
   color: #F472B6 !important;
+}
+
+/* =========================================================
+   LIGHT MODE (Soft 3D Claymorphism Slate-Blue)
+   Activated via <html data-theme="light">
+   ========================================================= */
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background: linear-gradient(145deg, #CFDCE4 0%, #BDCCD6 55%, #B4C5D1 100%) !important;
+  color: #1E2E3E !important;
+}
+html[data-theme="light"] .clay-sidebar {
+  background: linear-gradient(165deg, #34495E 0%, #2B3E50 65%, #233342 100%);
+  box-shadow: 8px 12px 28px rgba(24, 38, 52, 0.28);
+}
+html[data-theme="light"] .clay-sidebar-pill-active {
+  background: linear-gradient(145deg, #F0F6F9 0%, #DCE7EE 100%);
+  color: #2B3E50 !important;
+  box-shadow: 4px 6px 14px rgba(16, 28, 40, 0.3);
+}
+html[data-theme="light"] .clay-card {
+  background: linear-gradient(145deg, #DCE7EE 0%, #CBD9E3 100%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #1E2E3E;
+  box-shadow: 8px 10px 22px rgba(43, 62, 80, 0.15), -4px -4px 12px rgba(255, 255, 255, 0.6);
+}
+html[data-theme="light"] .clay-card-light {
+  background: linear-gradient(145deg, #EEF5F9 0%, #DFEAF0 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #1E2E3E;
+  box-shadow: 6px 8px 16px rgba(43, 62, 80, 0.12);
+}
+html[data-theme="light"] .clay-hero {
+  background: linear-gradient(135deg, #3A5166 0%, #2B3E50 55%, #243546 100%);
+  box-shadow: 10px 14px 28px rgba(32, 48, 64, 0.25);
+}
+html[data-theme="light"] .clay-btn-primary {
+  background: linear-gradient(145deg, #568E95 0%, #427076 100%);
+  box-shadow: 4px 6px 14px rgba(34, 62, 68, 0.28);
+}
+html[data-theme="light"] .clay-btn-soft {
+  background: linear-gradient(145deg, #EAF2F6 0%, #D4E1E9 100%);
+  color: #2B3E50;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+html[data-theme="light"] .clay-input {
+  background: #EDF4F8;
+  color: #1E2E3E;
+  border: 1px solid rgba(43, 62, 80, 0.15);
+}
+html[data-theme="light"] .clay-input option {
+  background: #FFFFFF;
+  color: #1E2E3E;
+}
+html[data-theme="light"] .clay-card .text-\[\#2B3E50\],
+html[data-theme="light"] .clay-card-light .text-\[\#2B3E50\] {
+  color: #2B3E50;
+}
+html[data-theme="light"] .clay-card .text-\[\#4A7C82\],
+html[data-theme="light"] .clay-card-light .text-\[\#4A7C82\] {
+  color: #4A7C82;
+}
+html[data-theme="light"] .clay-card .text-slate-700,
+html[data-theme="light"] .clay-card-light .text-slate-700 {
+  color: #334155;
+}
+html[data-theme="light"] .clay-card .text-slate-600,
+html[data-theme="light"] .clay-card-light .text-slate-600 {
+  color: #475569;
+}
+html[data-theme="light"] .clay-card .text-slate-500,
+html[data-theme="light"] .clay-card-light .text-slate-500 {
+  color: #64748B;
+}
+html[data-theme="light"] .clay-card .bg-white\/45,
+html[data-theme="light"] .clay-card .bg-white\/60,
+html[data-theme="light"] .clay-card .bg-white\/75,
+html[data-theme="light"] .clay-card .bg-white\/80,
+html[data-theme="light"] .clay-card .bg-white\/35,
+html[data-theme="light"] .clay-card .bg-white\/40 {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+html[data-theme="light"] .clay-card table tbody tr:hover,
+html[data-theme="light"] .clay-card .hover\:bg-white\/65:hover,
+html[data-theme="light"] .clay-card .hover\:bg-white\/60:hover,
+html[data-theme="light"] .clay-card .hover\:bg-white\/40:hover,
+html[data-theme="light"] .clay-card .hover\:bg-white:hover {
+  background-color: rgba(74, 124, 130, 0.12) !important;
+  color: #1E2E3E !important;
+}
+html[data-theme="light"] footer {
+  color: #475569 !important;
+}
+html[data-theme="light"] footer span {
+  color: #2B3E50 !important;
 }
 
 /* Custom scrollbar */
